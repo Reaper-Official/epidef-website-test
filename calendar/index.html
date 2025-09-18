@@ -1,0 +1,1041 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EPIDEF - Calendrier des Événements</title>
+    <meta name="description" content="Découvrez et participez aux événements EPIDEF - Conférences, discussions et visites">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-navy: #0B1426;
+            --primary-blue: #1E40AF;
+            --accent-gold: #F59E0B;
+            --text-primary: #111827;
+            --text-secondary: #6B7280;
+            --surface-white: #FFFFFF;
+            --surface-light: #F9FAFB;
+            --border-light: #E5E7EB;
+            --gradient-primary: linear-gradient(135deg, #0B1426 0%, #1E40AF 100%);
+            --gradient-accent: linear-gradient(135deg, #F59E0B 0%, #D97706 100%);
+            --success-green: #10B981;
+            --warning-orange: #F59E0B;
+            --error-red: #EF4444;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            line-height: 1.6;
+            color: var(--text-primary);
+            background-color: var(--surface-white);
+        }
+
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 32px;
+        }
+
+        /* Header */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border-light);
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        nav {
+            height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--primary-navy);
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 32px;
+            align-items: center;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-secondary);
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary-blue);
+        }
+
+        .nav-links a.active {
+            color: var(--primary-blue);
+            font-weight: 600;
+        }
+
+        /* Main Content */
+        .main-content {
+            margin-top: 80px;
+            padding: 80px 0;
+        }
+
+        .page-header {
+            text-align: center;
+            margin-bottom: 64px;
+        }
+
+        .page-badge {
+            display: inline-block;
+            background: var(--gradient-accent);
+            color: white;
+            padding: 8px 20px;
+            border-radius: 50px;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 24px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .page-header h1 {
+            font-size: 48px;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 16px;
+            line-height: 1.2;
+        }
+
+        .page-header p {
+            font-size: 20px;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Calendar Layout */
+        .calendar-layout {
+            display: grid;
+            grid-template-columns: 1fr 400px;
+            gap: 48px;
+            align-items: start;
+        }
+
+        /* Calendar Section */
+        .calendar-section {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+            overflow: hidden;
+        }
+
+        .calendar-header {
+            background: var(--gradient-primary);
+            color: white;
+            padding: 32px;
+            text-align: center;
+        }
+
+        .calendar-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+
+        .calendar-nav button {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: white;
+            padding: 12px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 18px;
+            transition: all 0.3s ease;
+        }
+
+        .calendar-nav button:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: scale(1.05);
+        }
+
+        .calendar-nav h3 {
+            font-size: 24px;
+            font-weight: 600;
+        }
+
+        .calendar-grid {
+            padding: 32px;
+        }
+
+        .calendar-days {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .day-header {
+            text-align: center;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--text-secondary);
+            padding: 8px 4px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .calendar-dates {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 4px;
+        }
+
+        .calendar-date {
+            aspect-ratio: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-size: 14px;
+            font-weight: 500;
+            position: relative;
+        }
+
+        .calendar-date:hover {
+            background: var(--surface-light);
+        }
+
+        .calendar-date.other-month {
+            color: var(--text-secondary);
+            opacity: 0.5;
+        }
+
+        .calendar-date.today {
+            background: var(--primary-blue);
+            color: white;
+            font-weight: 600;
+        }
+
+        .calendar-date.has-event {
+            background: rgba(245, 158, 11, 0.1);
+            border: 2px solid var(--accent-gold);
+        }
+
+        .calendar-date.selected {
+            background: var(--accent-gold);
+            color: white;
+        }
+
+        /* Event Info Sidebar */
+        .event-info-section {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+            padding: 32px;
+            position: sticky;
+            top: 120px;
+        }
+
+        .section-title {
+            font-size: 24px;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 24px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .selected-date-info {
+            background: var(--surface-light);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 24px;
+            text-align: center;
+        }
+
+        .selected-date-info h4 {
+            font-size: 18px;
+            color: var(--primary-blue);
+            margin-bottom: 8px;
+        }
+
+        .selected-date-info p {
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+
+        .date-events {
+            margin-top: 24px;
+        }
+
+        .date-event-card {
+            background: linear-gradient(135deg, #F8FAFC 0%, #F1F5F9 100%);
+            border-left: 4px solid var(--accent-gold);
+            border-radius: 8px;
+            padding: 16px;
+            margin-bottom: 16px;
+        }
+
+        .date-event-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 8px;
+        }
+
+        .date-event-meta {
+            font-size: 14px;
+            color: var(--text-secondary);
+            margin-bottom: 4px;
+        }
+
+        /* Events List */
+        .events-list {
+            grid-column: 1 / -1;
+            margin-top: 48px;
+        }
+
+        .events-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 24px;
+        }
+
+        .event-card {
+            background: white;
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            border-left: 4px solid var(--accent-gold);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .event-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .event-type-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 12px;
+        }
+
+        .event-type-badge.conference {
+            background: rgba(59, 130, 246, 0.1);
+            color: #1D4ED8;
+        }
+
+        .event-type-badge.discussion {
+            background: rgba(16, 185, 129, 0.1);
+            color: #047857;
+        }
+
+        .event-type-badge.visite {
+            background: rgba(245, 158, 11, 0.1);
+            color: #D97706;
+        }
+
+        .event-type-badge.formation {
+            background: rgba(139, 92, 246, 0.1);
+            color: #7C3AED;
+        }
+
+        .event-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 12px;
+            line-height: 1.3;
+        }
+
+        .event-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16px;
+            margin-bottom: 16px;
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+
+        .event-meta span {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .event-description {
+            color: var(--text-secondary);
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .event-speaker {
+            background: var(--surface-light);
+            border-radius: 8px;
+            padding: 12px;
+            margin-bottom: 16px;
+        }
+
+        .event-speaker strong {
+            color: var(--primary-blue);
+        }
+
+        .event-actions {
+            display: flex;
+            gap: 12px;
+        }
+
+        .btn {
+            padding: 12px 20px;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background: var(--gradient-primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(30, 64, 175, 0.3);
+        }
+
+        .btn-secondary {
+            background: var(--surface-light);
+            color: var(--text-primary);
+            border: 2px solid var(--border-light);
+        }
+
+        .btn-secondary:hover {
+            background: var(--border-light);
+        }
+
+        .btn-small {
+            padding: 8px 16px;
+            font-size: 13px;
+        }
+
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 64px 32px;
+            color: var(--text-secondary);
+        }
+
+        .empty-state svg {
+            width: 64px;
+            height: 64px;
+            margin-bottom: 24px;
+            opacity: 0.5;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .calendar-layout {
+                grid-template-columns: 1fr;
+                gap: 32px;
+            }
+
+            .event-info-section {
+                position: static;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 16px;
+            }
+
+            .page-header h1 {
+                font-size: 32px;
+            }
+
+            .calendar-nav h3 {
+                font-size: 18px;
+            }
+
+            .events-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="container">
+            <a href="#" class="logo">EPIDEF</a>
+            <ul class="nav-links">
+                <li><a href="../index.html">Accueil</a></li>
+                <li><a href="#" class="active">Événements</a></li>
+                <li><a href="#contact">Contact</a></li>
+                <li><a href="mailto:staffepidef@gmail.com" target="_blank" rel="noopener noreferrer">Nous contacter</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="main-content">
+        <div class="container">
+            <div class="page-header">
+                <div class="page-badge">Événements</div>
+                <h1>Calendrier EPIDEF</h1>
+                <p>Découvrez nos prochains événements et participez à nos activités de sensibilisation géopolitique</p>
+            </div>
+
+            <div class="calendar-layout">
+                <!-- Calendar Section -->
+                <div class="calendar-section">
+                    <div class="calendar-header">
+                        <div class="calendar-nav">
+                            <button id="prevMonth">‹</button>
+                            <h3 id="currentMonth">Décembre 2024</h3>
+                            <button id="nextMonth">›</button>
+                        </div>
+                        <p>Cliquez sur une date pour voir les événements</p>
+                    </div>
+                    <div class="calendar-grid">
+                        <div class="calendar-days">
+                            <div class="day-header">Lun</div>
+                            <div class="day-header">Mar</div>
+                            <div class="day-header">Mer</div>
+                            <div class="day-header">Jeu</div>
+                            <div class="day-header">Ven</div>
+                            <div class="day-header">Sam</div>
+                            <div class="day-header">Dim</div>
+                        </div>
+                        <div class="calendar-dates" id="calendar-dates">
+                            <!-- Dates générées dynamiquement -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Event Info Sidebar -->
+                <div class="event-info-section">
+                    <h2 class="section-title">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/>
+                            <polyline points="12,6 12,12 16,14" stroke="currentColor" stroke-width="2"/>
+                        </svg>
+                        Événements du jour
+                    </h2>
+                    
+                    <div class="selected-date-info" id="selected-date-info">
+                        <h4>Sélectionnez une date</h4>
+                        <p>Cliquez sur une date du calendrier pour voir les événements</p>
+                    </div>
+
+                    <div class="date-events" id="date-events">
+                        <!-- Événements de la date sélectionnée -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Events List -->
+            <div class="events-list">
+                <h2 class="section-title">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="3" y="4" width="18" height="18" rx="2" ry="2" stroke="currentColor" stroke-width="2"/>
+                        <line x1="16" y1="2" x2="16" y2="6" stroke="currentColor" stroke-width="2"/>
+                        <line x1="8" y1="2" x2="8" y2="6" stroke="currentColor" stroke-width="2"/>
+                        <line x1="3" y1="10" x2="21" y2="10" stroke="currentColor" stroke-width="2"/>
+                    </svg>
+                    Tous nos événements
+                </h2>
+                <div class="events-grid" id="events-list">
+                    <!-- Événements affichés ici -->
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // ============================================================================
+        // CONFIGURATION DES ÉVÉNEMENTS - À MODIFIER ICI POUR AJOUTER DES ÉVÉNEMENTS
+        // ============================================================================
+        
+        const events = [
+            {
+                id: 1,
+                title: "Introduction à la géopolitique moderne",
+                type: "conference",
+                date: "2024-12-20",
+                time: "18:30",
+                duration: "2h",
+                capacity: 50,
+                location: "Amphithéâtre A, Campus",
+                speaker: "Dr. Marie Dubois",
+                speakerTitle: "Professeure en Relations Internationales",
+                description: "Une conférence accessible à tous pour comprendre les grands enjeux géopolitiques du 21ème siècle. Nous aborderons les nouvelles alliances, les tensions commerciales et les défis sécuritaires contemporains.",
+                registrationRequired: true
+            },
+            {
+                id: 2,
+                title: "Discussion : Les enjeux de la défense européenne",
+                type: "discussion",
+                date: "2024-12-22",
+                time: "14:00",
+                duration: "1h30",
+                capacity: 25,
+                location: "Salle de réunion B",
+                speaker: "Équipe EPIDEF",
+                speakerTitle: "Animation collective",
+                description: "Session participative pour échanger sur les défis de la défense commune européenne. Format table ronde avec débat ouvert et modéré.",
+                registrationRequired: true
+            },
+            {
+                id: 3,
+                title: "Visite du Musée de l'Armée",
+                type: "visite",
+                date: "2024-12-28",
+                time: "10:00",
+                duration: "3h",
+                capacity: 20,
+                location: "Hôtel des Invalides, Paris",
+                speaker: "Guide spécialisé",
+                speakerTitle: "Conservateur du musée",
+                description: "Découverte guidée des collections militaires et historiques. Focus sur l'évolution des stratégies militaires et des enjeux de défense à travers l'histoire.",
+                registrationRequired: true
+            },
+            {
+                id: 4,
+                title: "Formation : Analyse des conflits contemporains",
+                type: "formation",
+                date: "2025-01-10",
+                time: "09:00",
+                duration: "6h",
+                capacity: 15,
+                location: "Salle de formation C",
+                speaker: "Colonel (r) Jean Martin",
+                speakerTitle: "Expert en stratégie militaire",
+                description: "Formation approfondie sur les méthodes d'analyse des conflits contemporains. Études de cas pratiques et outils méthodologiques.",
+                registrationRequired: true
+            },
+            {
+                id: 5,
+                title: "Conférence : L'intelligence économique",
+                type: "conference",
+                date: "2025-01-15",
+                time: "19:00",
+                duration: "2h",
+                capacity: 80,
+                location: "Grand Amphithéâtre",
+                speaker: "Sophie Leroy",
+                speakerTitle: "Consultante en intelligence économique",
+                description: "Comprendre les enjeux de l'intelligence économique dans la compétition mondiale. Cas concrets et stratégies d'entreprises.",
+                registrationRequired: false
+            },
+            {
+                id: 6,
+                title: "Discussion : Cybersécurité et souveraineté",
+                type: "discussion",
+                date: "2025-01-20",
+                time: "16:00",
+                duration: "2h",
+                capacity: 30,
+                location: "Salle informatique",
+                speaker: "Experts ANSSI",
+                speakerTitle: "Agence Nationale de Sécurité",
+                description: "Table ronde sur les défis de la cybersécurité pour la souveraineté nationale. Échanges avec des professionnels du secteur.",
+                registrationRequired: true
+            }
+        ];
+
+        // ============================================================================
+        // LOGIQUE DU CALENDRIER - NE PAS MODIFIER SAUF POUR PERSONNALISER
+        // ============================================================================
+
+        let currentDate = new Date();
+        let selectedDate = null;
+
+        // Initialisation
+        document.addEventListener('DOMContentLoaded', function() {
+            updateCalendar();
+            updateEventsList();
+            initializeEventHandlers();
+        });
+
+        // Gestionnaires d'événements
+        function initializeEventHandlers() {
+            // Navigation du calendrier
+            document.getElementById('prevMonth').addEventListener('click', () => {
+                currentDate.setMonth(currentDate.getMonth() - 1);
+                updateCalendar();
+            });
+
+            document.getElementById('nextMonth').addEventListener('click', () => {
+                currentDate.setMonth(currentDate.getMonth() + 1);
+                updateCalendar();
+            });
+        }
+
+        // Mise à jour du calendrier
+        function updateCalendar() {
+            const monthNames = [
+                "Janvier", "Février", "Mars", "Avril", "Mai", "Juin",
+                "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre"
+            ];
+
+            document.getElementById('currentMonth').textContent = 
+                `${monthNames[currentDate.getMonth()]} ${currentDate.getFullYear()}`;
+
+            const firstDay = new Date(currentDate.getFullYear(), currentDate.getMonth(), 1);
+            const lastDay = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 0);
+            const startDate = new Date(firstDay);
+            startDate.setDate(startDate.getDate() - (firstDay.getDay() === 0 ? 6 : firstDay.getDay() - 1));
+
+            const calendarDates = document.getElementById('calendar-dates');
+            calendarDates.innerHTML = '';
+
+            for (let i = 0; i < 42; i++) {
+                const date = new Date(startDate);
+                date.setDate(startDate.getDate() + i);
+
+                const dateElement = document.createElement('div');
+                dateElement.className = 'calendar-date';
+                dateElement.textContent = date.getDate();
+
+                // Classes CSS selon le statut
+                if (date.getMonth() !== currentDate.getMonth()) {
+                    dateElement.classList.add('other-month');
+                }
+
+                if (isToday(date)) {
+                    dateElement.classList.add('today');
+                }
+
+                if (hasEvent(date)) {
+                    dateElement.classList.add('has-event');
+                }
+
+                // Gestionnaire de clic
+                dateElement.addEventListener('click', () => selectDate(date));
+
+                calendarDates.appendChild(dateElement);
+            }
+        }
+
+        // Sélection d'une date
+        function selectDate(date) {
+            selectedDate = date;
+            
+            // Mise à jour visuelle
+            document.querySelectorAll('.calendar-date').forEach(el => {
+                el.classList.remove('selected');
+            });
+            event.target.classList.add('selected');
+
+            // Mise à jour de la sidebar
+            updateSelectedDateInfo(date);
+        }
+
+        // Mise à jour des informations de la date sélectionnée
+        function updateSelectedDateInfo(date) {
+            const dateInfo = document.getElementById('selected-date-info');
+            const dateEvents = document.getElementById('date-events');
+            
+            const formattedDate = formatDate(date.toISOString().split('T')[0]);
+            const dayEvents = getEventsForDate(date.toISOString().split('T')[0]);
+
+            dateInfo.innerHTML = `
+                <h4>${formattedDate}</h4>
+                <p>${dayEvents.length} événement${dayEvents.length !== 1 ? 's' : ''} programmé${dayEvents.length !== 1 ? 's' : ''}</p>
+            `;
+
+            if (dayEvents.length === 0) {
+                dateEvents.innerHTML = `
+                    <div class="empty-state">
+                        <p>Aucun événement prévu ce jour</p>
+                    </div>
+                `;
+            } else {
+                dateEvents.innerHTML = dayEvents.map(event => `
+                    <div class="date-event-card">
+                        <div class="date-event-title">${event.title}</div>
+                        <div class="date-event-meta">🕐 ${event.time} • ${event.duration}</div>
+                        <div class="date-event-meta">📍 ${event.location}</div>
+                        ${event.speaker ? `<div class="date-event-meta">👤 ${event.speaker}</div>` : ''}
+                    </div>
+                `).join('');
+            }
+        }
+
+        // Mise à jour de la liste complète des événements
+        function updateEventsList() {
+            const eventsList = document.getElementById('events-list');
+            
+            if (events.length === 0) {
+                eventsList.innerHTML = `
+                    <div class="empty-state">
+                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <rect x="3" y="4" width="18" height="18" rx="2" ry="2" stroke="currentColor" stroke-width="2"/>
+                            <line x1="16" y1="2" x2="16" y2="6" stroke="currentColor" stroke-width="2"/>
+                            <line x1="8" y1="2" x2="8" y2="6" stroke="currentColor" stroke-width="2"/>
+                            <line x1="3" y1="10" x2="21" y2="10" stroke="currentColor" stroke-width="2"/>
+                        </svg>
+                        <h3>Aucun événement programmé</h3>
+                        <p>Les prochains événements seront bientôt annoncés</p>
+                    </div>
+                `;
+                return;
+            }
+
+            // Tri des événements par date
+            const sortedEvents = [...events].sort((a, b) => 
+                new Date(a.date + 'T' + a.time) - new Date(b.date + 'T' + b.time)
+            );
+
+            eventsList.innerHTML = sortedEvents.map(event => `
+                <div class="event-card">
+                    <span class="event-type-badge ${event.type}">${getEventTypeLabel(event.type)}</span>
+                    <h3 class="event-title">${event.title}</h3>
+                    <div class="event-meta">
+                        <span>
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <rect x="3" y="4" width="18" height="18" rx="2" ry="2" stroke="currentColor" stroke-width="2"/>
+                                <line x1="16" y1="2" x2="16" y2="6" stroke="currentColor" stroke-width="2"/>
+                                <line x1="8" y1="2" x2="8" y2="6" stroke="currentColor" stroke-width="2"/>
+                                <line x1="3" y1="10" x2="21" y2="10" stroke="currentColor" stroke-width="2"/>
+                            </svg>
+                            ${formatDate(event.date)}
+                        </span>
+                        <span>
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/>
+                                <polyline points="12,6 12,12 16,14" stroke="currentColor" stroke-width="2"/>
+                            </svg>
+                            ${event.time} (${event.duration})
+                        </span>
+                        <span>
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" stroke="currentColor" stroke-width="2"/>
+                                <circle cx="12" cy="10" r="3" stroke="currentColor" stroke-width="2"/>
+                            </svg>
+                            ${event.location}
+                        </span>
+                    </div>
+                    
+                    ${event.speaker && event.speakerTitle ? `
+                    <div class="event-speaker">
+                        <strong>Intervenant :</strong> ${event.speaker}<br>
+                        <small>${event.speakerTitle}</small>
+                    </div>
+                    ` : ''}
+                    
+                    <p class="event-description">${event.description}</p>
+                    
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin: 16px 0; font-size: 14px;">
+                        <span style="color: var(--text-secondary);">
+                            <strong>Places :</strong> ${event.capacity} disponibles
+                        </span>
+                        ${event.registrationRequired ? 
+                            '<span style="color: var(--accent-gold); font-weight: 600;">📝 Inscription requise</span>' : 
+                            '<span style="color: var(--success-green); font-weight: 600;">🚪 Accès libre</span>'
+                        }
+                    </div>
+                    
+                    <div class="event-actions">
+                        ${event.registrationRequired ? 
+                            `<a href="mailto:staffepidef@gmail.com?subject=${encodeURIComponent('Inscription - ' + event.title)}&body=${encodeURIComponent(generateRegistrationEmail(event))}" 
+                               class="btn btn-primary btn-small" target="_blank" rel="noopener noreferrer">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" stroke="currentColor" stroke-width="2"/>
+                                    <circle cx="8.5" cy="7" r="4" stroke="currentColor" stroke-width="2"/>
+                                    <line x1="20" y1="8" x2="20" y2="14" stroke="currentColor" stroke-width="2"/>
+                                    <line x1="23" y1="11" x2="17" y2="11" stroke="currentColor" stroke-width="2"/>
+                                </svg>
+                                S'inscrire
+                            </a>` :
+                            `<span class="btn btn-secondary btn-small" style="cursor: default;">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M9 12l2 2 4-4" stroke="currentColor" stroke-width="2"/>
+                                    <path d="M21 12c0 4.97-4.03 9-9 9s-9-4.03-9-9 4.03-9 9-9c2.35 0 4.49.9 6.1 2.37" stroke="currentColor" stroke-width="2"/>
+                                </svg>
+                                Accès libre
+                            </span>`
+                        }
+                        <button class="btn btn-secondary btn-small" onclick="shareEvent(${event.id})">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <circle cx="18" cy="5" r="3" stroke="currentColor" stroke-width="2"/>
+                                <circle cx="6" cy="12" r="3" stroke="currentColor" stroke-width="2"/>
+                                <circle cx="18" cy="19" r="3" stroke="currentColor" stroke-width="2"/>
+                                <line x1="8.59" y1="13.51" x2="15.42" y2="17.49" stroke="currentColor" stroke-width="2"/>
+                                <line x1="15.41" y1="6.51" x2="8.59" y2="10.49" stroke="currentColor" stroke-width="2"/>
+                            </svg>
+                            Partager
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Fonctions utilitaires
+        function isToday(date) {
+            const today = new Date();
+            return date.toDateString() === today.toDateString();
+        }
+
+        function hasEvent(date) {
+            const dateString = date.toISOString().split('T')[0];
+            return events.some(event => event.date === dateString);
+        }
+
+        function getEventsForDate(dateString) {
+            return events.filter(event => event.date === dateString);
+        }
+
+        function formatDate(dateString) {
+            const date = new Date(dateString);
+            const options = { 
+                weekday: 'long', 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric' 
+            };
+            return date.toLocaleDateString('fr-FR', options);
+        }
+
+        function getEventTypeLabel(type) {
+            const labels = {
+                conference: '📊 Conférence',
+                discussion: '💬 Discussion',
+                visite: '🏛️ Visite',
+                formation: '🎓 Formation'
+            };
+            return labels[type] || type;
+        }
+
+        function generateRegistrationEmail(event) {
+            return `Bonjour,
+
+Je souhaite m'inscrire à l'événement suivant :
+
+📅 Événement : ${event.title}
+📅 Date : ${formatDate(event.date)}
+🕐 Heure : ${event.time} (durée : ${event.duration})
+📍 Lieu : ${event.location}
+${event.speaker ? `👤 Intervenant : ${event.speaker}` : ''}
+
+${event.description}
+
+Cordialement,`;
+        }
+
+        // Actions sur les événements
+        function shareEvent(eventId) {
+            const event = events.find(e => e.id === eventId);
+            if (event) {
+                const shareText = `📅 ${event.title}
+
+${formatDate(event.date)} à ${event.time}
+📍 ${event.location}
+${event.speaker ? `👤 ${event.speaker}` : ''}
+
+${event.description}
+
+${event.registrationRequired ? '📝 Inscription requise' : '🚪 Accès libre'}
+
+Organisé par EPIDEF - Association de géopolitique et défense
+📧 staffepidef@gmail.com`;
+
+                if (navigator.share) {
+                    navigator.share({
+                        title: event.title,
+                        text: shareText,
+                        url: window.location.href
+                    });
+                } else {
+                    // Fallback pour les navigateurs sans support du Web Share API
+                    navigator.clipboard.writeText(shareText).then(() => {
+                        showMessage('Informations de l\'événement copiées !');
+                    }).catch(() => {
+                        // Fallback ultime avec une alerte
+                        alert('Voici les informations à partager :\n\n' + shareText);
+                    });
+                }
+            }
+        }
+
+        function showMessage(text) {
+            // Création d'un message temporaire
+            const messageDiv = document.createElement('div');
+            messageDiv.style.cssText = `
+                position: fixed;
+                top: 100px;
+                right: 32px;
+                background: var(--success-green);
+                color: white;
+                padding: 16px 24px;
+                border-radius: 8px;
+                box-shadow: 0 8px 25px rgba(16, 185, 129, 0.3);
+                z-index: 1001;
+                font-weight: 600;
+                transform: translateX(100%);
+                transition: transform 0.3s ease;
+            `;
+            messageDiv.textContent = '✅ ' + text;
+            
+            document.body.appendChild(messageDiv);
+            
+            // Animation d'entrée
+            setTimeout(() => {
+                messageDiv.style.transform = 'translateX(0)';
+            }, 100);
+            
+            // Suppression automatique
+            setTimeout(() => {
+                messageDiv.style.transform = 'translateX(100%)';
+                setTimeout(() => {
+                    document.body.removeChild(messageDiv);
+                }, 300);
+            }, 3000);
+        }
+        
+        // Navigation avec les touches du clavier
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'ArrowLeft') {
+                document.getElementById('prevMonth').click();
+            } else if (e.key === 'ArrowRight') {
+                document.getElementById('nextMonth').click();
+            }
+        });
+    </script>
+</body>
+</html>
