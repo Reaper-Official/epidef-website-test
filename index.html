@@ -1,0 +1,1089 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EPIDEF - Association Géopolitique et Défense</title>
+	<meta name="description" content="EPIDEF - Association Epitéenne axé sur les sujets Défense et Géopolitique.">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-navy: #0B1426;
+            --primary-blue: #1E40AF;
+            --accent-gold: #F59E0B;
+            --text-primary: #111827;
+            --text-secondary: #6B7280;
+            --surface-white: #FFFFFF;
+            --surface-light: #F9FAFB;
+            --border-light: #E5E7EB;
+            --gradient-primary: linear-gradient(135deg, #0B1426 0%, #1E40AF 100%);
+            --gradient-accent: linear-gradient(135deg, #F59E0B 0%, #D97706 100%);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            line-height: 1.7;
+            color: var(--text-primary);
+            background-color: var(--surface-white);
+            font-weight: 400;
+        }
+
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 32px;
+        }
+
+        /* Header & Navigation */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px) saturate(180%);
+            border-bottom: 1px solid var(--border-light);
+            z-index: 1000;
+            transition: all 0.3s cubic-bezier(0.4, 0.0, 0.2, 1);
+        }
+
+        nav {
+            height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--primary-navy);
+            text-decoration: none;
+            letter-spacing: -0.5px;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 48px;
+            align-items: center;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-secondary);
+            font-weight: 500;
+            font-size: 15px;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary-blue);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -8px;
+            left: 0;
+            background: var(--gradient-accent);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .nav-cta {
+            background: var(--gradient-primary);
+            color: white !important;
+            padding: 12px 24px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+        }
+
+        .nav-cta:hover {
+            color: white !important;
+            transform: translateY(-1px);
+            box-shadow: 0 8px 25px rgba(30, 64, 175, 0.25);
+        }
+
+        .nav-cta::after {
+            display: none;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: var(--gradient-primary);
+            color: white;
+            padding: 160px 0 120px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000"><defs><radialGradient id="grad" cx="50%" cy="50%" r="50%"><stop offset="0%" style="stop-color:rgba(245,158,11,0.1);stop-opacity:1" /><stop offset="100%" style="stop-color:rgba(245,158,11,0);stop-opacity:0" /></radialGradient></defs><circle cx="200" cy="300" r="200" fill="url(%23grad)"/><circle cx="800" cy="700" r="150" fill="url(%23grad)"/></svg>') no-repeat;
+            background-size: cover;
+            opacity: 0.6;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 800px;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 50px;
+            padding: 8px 20px;
+            font-size: 14px;
+            font-weight: 500;
+            margin-bottom: 32px;
+            backdrop-filter: blur(10px);
+        }
+
+        .hero h1 {
+            font-size: 64px;
+            font-weight: 700;
+            line-height: 1.1;
+            margin-bottom: 24px;
+            letter-spacing: -2px;
+        }
+
+        .hero-subtitle {
+            font-size: 24px;
+            font-weight: 400;
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 16px;
+            letter-spacing: -0.5px;
+        }
+
+        .hero-description {
+            font-size: 18px;
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 48px;
+            line-height: 1.6;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .btn-primary {
+            background: var(--gradient-accent);
+            color: white;
+            padding: 16px 32px;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 16px;
+            transition: all 0.3s cubic-bezier(0.4, 0.0, 0.2, 1);
+            border: none;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 40px rgba(245, 158, 11, 0.3);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: white;
+            padding: 16px 32px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.5);
+        }
+
+        /* Main Content */
+        .main-content {
+            background: var(--surface-white);
+            position: relative;
+            z-index: 10;
+        }
+
+        .section {
+            padding: 120px 0;
+        }
+
+        .section-header {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto 80px;
+        }
+
+        .section-badge {
+            display: inline-block;
+            background: var(--gradient-accent);
+            color: white;
+            padding: 8px 20px;
+            border-radius: 50px;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 24px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .section h2 {
+            font-size: 48px;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 24px;
+            letter-spacing: -1px;
+            line-height: 1.2;
+        }
+
+        .section-description {
+            font-size: 20px;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        /* Mission Section */
+        .mission {
+            background: var(--surface-light);
+        }
+
+        .mission-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            align-items: center;
+        }
+
+        .mission-text h3 {
+            font-size: 32px;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 24px;
+            line-height: 1.3;
+        }
+
+        .mission-text p {
+            font-size: 18px;
+            color: var(--text-secondary);
+            margin-bottom: 32px;
+            line-height: 1.7;
+        }
+
+        .mission-stats {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 32px;
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: 24px;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+        }
+
+        .stat-number {
+            font-size: 32px;
+            font-weight: 700;
+            color: var(--primary-blue);
+            margin-bottom: 8px;
+        }
+
+        .stat-label {
+            font-size: 14px;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        /* Activities Section */
+        .activities-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 32px;
+            margin-top: 80px;
+        }
+
+        .activity-card {
+            background: white;
+            padding: 40px 32px;
+            border-radius: 20px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+            transition: all 0.4s cubic-bezier(0.4, 0.0, 0.2, 1);
+            border: 1px solid var(--border-light);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .activity-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--gradient-accent);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .activity-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .activity-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+        }
+
+        .activity-icon {
+            width: 64px;
+            height: 64px;
+            background: var(--gradient-primary);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 24px;
+        }
+
+        .activity-icon svg {
+            width: 28px;
+            height: 28px;
+            color: white;
+        }
+
+        .activity-card h3 {
+            font-size: 24px;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 16px;
+            line-height: 1.3;
+        }
+
+        .activity-card p {
+            color: var(--text-secondary);
+            font-size: 16px;
+            line-height: 1.6;
+        }
+
+        .accessibility-note {
+            background: linear-gradient(135deg, #EFF6FF 0%, #DBEAFE 100%);
+            border: 2px solid #BFDBFE;
+            border-radius: 16px;
+            padding: 32px;
+            text-align: center;
+            margin-top: 48px;
+        }
+
+        .accessibility-note h3 {
+            font-size: 24px;
+            font-weight: 600;
+            color: var(--primary-blue);
+            margin-bottom: 16px;
+        }
+
+        .accessibility-note p {
+            font-size: 18px;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        /* Team Section */
+        .team {
+            background: var(--surface-light);
+        }
+
+        .positions-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 24px;
+            margin-top: 80px;
+        }
+
+        .position-card {
+            background: white;
+            padding: 32px;
+            border-radius: 16px;
+            border: 2px solid var(--border-light);
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .position-card:hover {
+            border-color: var(--primary-blue);
+            transform: translateY(-4px);
+            box-shadow: 0 12px 40px rgba(30, 64, 175, 0.1);
+        }
+
+        .position-card h3 {
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 12px;
+        }
+
+        .position-card p {
+            color: var(--text-secondary);
+            font-size: 15px;
+            line-height: 1.6;
+        }
+
+        .member-cta {
+            background: linear-gradient(135deg, #EFF6FF 0%, #DBEAFE 100%);
+            border: 2px solid #BFDBFE;
+            border-radius: 20px;
+            padding: 48px;
+            text-align: center;
+            margin-top: 48px;
+        }
+
+        .member-cta h3 {
+            font-size: 28px;
+            font-weight: 600;
+            color: var(--primary-blue);
+            margin-bottom: 16px;
+        }
+
+        .member-cta p {
+            font-size: 18px;
+            color: var(--text-secondary);
+            line-height: 1.6;
+            margin-bottom: 32px;
+        }
+
+        /* Contact Section */
+        .contact {
+            background: var(--gradient-primary);
+            color: white;
+            text-align: center;
+        }
+
+        .contact .section-badge {
+            background: rgba(245, 158, 11, 0.2);
+            color: var(--accent-gold);
+        }
+
+        .contact h2 {
+            color: white;
+        }
+
+        .contact .section-description {
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .contact-content {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .contact-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 32px;
+            margin-bottom: 64px;
+        }
+
+        .contact-option {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+            padding: 40px 32px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .contact-option:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+            border-color: rgba(245, 158, 11, 0.5);
+        }
+
+        .contact-icon {
+            width: 80px;
+            height: 80px;
+            background: var(--gradient-accent);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 24px;
+            color: white;
+        }
+
+        .contact-option h3 {
+            font-size: 24px;
+            font-weight: 600;
+            color: white;
+            margin-bottom: 16px;
+        }
+
+        .contact-option p {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 16px;
+            line-height: 1.6;
+            margin-bottom: 24px;
+        }
+
+        .contact-btn {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            padding: 14px 28px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 15px;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+
+        .contact-btn:hover {
+            background: var(--accent-gold);
+            border-color: var(--accent-gold);
+            transform: translateY(-2px);
+        }
+
+        .contact-footer {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 40px;
+            text-align: center;
+        }
+
+        .email-highlight {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        .email-highlight svg {
+            color: var(--accent-gold);
+        }
+
+        .email-highlight h4 {
+            color: white;
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .email-highlight a {
+            color: var(--accent-gold);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 16px;
+        }
+
+        .email-highlight a:hover {
+            text-decoration: underline;
+        }
+
+        .contact-footer p {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 16px;
+            line-height: 1.6;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--primary-navy);
+            color: white;
+            padding: 48px 0;
+            text-align: center;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 48px;
+            margin-bottom: 32px;
+            text-align: left;
+        }
+
+        .footer-section h4 {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 16px;
+            color: white;
+        }
+
+        .footer-section p {
+            color: rgba(255, 255, 255, 0.7);
+            line-height: 1.6;
+        }
+
+        .footer-section a {
+            color: rgba(255, 255, 255, 0.9);
+            text-decoration: none;
+            line-height: 1.6;
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .footer-section a:hover {
+            color: var(--accent-gold);
+            transform: translateX(4px);
+        }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: 32px;
+            text-align: center;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 16px;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .hero {
+                padding: 120px 0 80px;
+            }
+
+            .hero h1 {
+                font-size: 40px;
+            }
+
+            .hero-subtitle {
+                font-size: 20px;
+            }
+
+            .hero-description {
+                font-size: 16px;
+            }
+
+            .section {
+                padding: 80px 0;
+            }
+
+            .section h2 {
+                font-size: 36px;
+            }
+
+            .mission-content {
+                grid-template-columns: 1fr;
+                gap: 48px;
+            }
+
+            .hero-buttons {
+                flex-direction: column;
+            }
+
+            .btn-primary,
+            .btn-secondary {
+                text-align: center;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="container">
+            <a href="#" class="logo">EPIDEF</a>
+            <ul class="nav-links">
+                <li><a href="#mission">Mission</a></li>
+                <li><a href="#activites">Activités</a></li>
+                <li><a href="#equipe">Équipe</a></li>
+                <li><a href="#contact">Contact</a></li>
+                <li><a href="#contact" class="nav-cta">
+                        Contacter Epidef
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-badge">
+                    Association • Sensibilisation • Géopolitique & Défense
+                </div>
+                <h1>EPIDEF</h1>
+                <div class="hero-subtitle">Comprendre les enjeux de demain</div>
+                <p class="hero-description">
+                    Une association ouverte à tous pour démocratiser la géopolitique et les enjeux de défense. Rejoignez-nous pour mieux comprendre le monde qui nous entoure, quel que soit votre niveau.
+                </p>
+                <div class="hero-buttons">
+                    <a href="#contact" class="btn-primary">
+                        Rejoindre EPIDEF 
+                    </a>
+                    <a href="#mission" class="btn-secondary">
+                        Découvrir notre mission
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M8 12L16 12M16 12L12 8M16 12L12 16" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <main class="main-content">
+        <section id="mission" class="section mission">
+            <div class="container">
+                <div class="mission-content">
+                    <div class="mission-text">
+                        <div class="section-badge">Notre Mission</div>
+                        <h3>Démocratiser les enjeux géopolitiques et de défense</h3>
+                        <p>
+                            Dans un monde en perpétuelle évolution, les questions géopolitiques et de défense nous concernent tous. EPIDEF rend ces sujets complexes accessibles à chacun, peu importe votre niveau de départ.
+                        </p>
+                        <p>
+                            Notre objectif : créer un espace d'échange et d'apprentissage ouvert, où la curiosité prime sur les prérequis, et où chaque participant peut enrichir sa compréhension du monde contemporain.
+                        </p>
+                    </div>
+                    <div class="mission-stats">
+                        <div class="stat-item">
+                            <div class="stat-number">Tous</div>
+                            <div class="stat-label">Niveaux Bienvenus</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">0€</div>
+                            <div class="stat-label">Adhésion Gratuite</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">∞</div>
+                            <div class="stat-label">Curiosité Requise</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">100%</div>
+                            <div class="stat-label">Accessible</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="activites" class="section">
+            <div class="container">
+                <div class="section-header">
+                    <div class="section-badge">Nos Activités</div>
+                    <h2>Apprendre ensemble, à votre rythme</h2>
+                    <p class="section-description">
+                        Découvrez les enjeux géopolitiques et de défense à travers des activités variées, pensées pour être accessibles à tous, débutants comme passionnés confirmés.
+                    </p>
+                </div>
+                
+                <div class="activities-grid">
+                    <div class="activity-card">
+                        <div class="activity-icon">
+                            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M19 3H5C3.9 3 3 3.9 3 5V19C3 20.1 3.9 21 5 21H19C20.1 21 21 20.1 21 19V5C21 3.9 20.1 3 19 3ZM19 19H5V8H19V19ZM7 10V12H9V10H7ZM11 10V12H13V10H11ZM15 10V12H17V10H15ZM7 14V16H9V14H7ZM11 14V16H13V14H11ZM15 14V16H17V14H15Z" fill="currentColor"/>
+                            </svg>
+                        </div>
+                        <h3>Conférences Accessibles</h3>
+                        <p>Des conférences ouvertes à tous animées par des experts qui savent vulgariser : universitaires, journalistes, anciens militaires et diplomates qui rendent les sujets complexes compréhensibles.</p>
+                    </div>
+                    
+                    <div class="activity-card">
+                        <div class="activity-icon">
+                            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M16 4C18.2091 4 20 5.79086 20 8C20 10.2091 18.2091 12 16 12C13.7909 12 12 10.2091 12 8C12 5.79086 13.7909 4 16 4ZM8 12C10.2091 12 12 13.7909 12 16C12 18.2091 10.2091 20 8 20C5.79086 20 4 18.2091 4 16C4 13.7909 5.79086 12 8 12Z" fill="currentColor"/>
+                            </svg>
+                        </div>
+                        <h3>Discussions Participatives</h3>
+                        <p>Sessions de discussion ouvertes où chacun peut poser ses questions et partager ses réflexions. Pas de jugement, juste l'envie commune de mieux comprendre les enjeux actuels.</p>
+                    </div>
+                    
+                                        <div class="activity-card">
+                        <div class="activity-icon">
+                            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M12 2L3 9V22H9V16H15V22H21V9L12 2ZM19 20H17V14H7V20H5V10L12 4.5L19 10V20Z" fill="currentColor"/>
+                            </svg>
+                        </div>
+                        <h3>Visites Découvertes</h3>
+                        <p>Visites guidées de lieux d'intérêt : musées militaires, mémoriaux, et éventuellement écoles militaires pour découvrir concrètement l'histoire et les enjeux de défense.</p>
+                    </div>
+                    
+                    <div class="activity-card">
+                        <div class="activity-icon">
+                            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M14 2H6C4.9 2 4 2.9 4 4V20C4 21.1 4.89 22 5.99 22H18C19.1 22 20 21.1 20 20V8L14 2ZM18 20H6V4H13V9H18V20Z" fill="currentColor"/>
+                            </svg>
+                        </div>
+                        <h3>Ressources Pédagogiques</h3>
+                        <p>Articles, synthèses et analyses rédigés dans un langage clair, avec des explications de base pour que tout le monde puisse suivre et approfondir selon ses intérêts.</p>
+                    </div>
+                </div>
+
+                <div class="accessibility-note">
+                    <h3>📚 Aucun Prérequis Nécessaire</h3>
+                    <p>
+                        Que vous soyez étudiant, professionnel, retraité, ou simplement curieux, nos événements sont conçus pour être compréhensibles par tous. Les concepts complexes sont toujours expliqués et contextualisés.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <section id="equipe" class="section team">
+            <div class="container">
+                <div class="section-header">
+                    <div class="section-badge">Rejoindre l'équipe</div>
+                    <h2>Construisons EPIDEF ensemble</h2>
+                    <p class="section-description">
+                        EPIDEF cherche des personnes motivées pour l'aider à grandir. Pas besoin d'être expert, juste d'avoir envie de contribuer à rendre la géopolitique accessible à tous.
+                    </p>
+                </div>
+                
+                <div class="positions-grid">
+                    <div class="position-card">
+                        <h3>Secrétaire</h3>
+                        <p>Organisation des événements, gestion des adhésions, coordination avec les intervenants. Un rôle clé pour faire fonctionner l'association au quotidien.</p>
+                    </div>
+                    
+                    <div class="position-card">
+                        <h3>Responsable Communication</h3>
+                        <p>Gestion des réseaux sociaux, création de contenus attractifs, communication sur nos événements pour faire connaître EPIDEF au plus grand nombre.</p>
+                    </div>
+                    
+                    <div class="position-card">
+                        <h3>Illustrateur·rice</h3>
+                        <p>Création de visuels pour nos événements, infographies pour simplifier les concepts complexes, design des supports de communication de l'association.</p>
+                    </div>
+                    
+                    <div class="position-card">
+                        <h3>Trésorier·ère</h3>
+                        <p>Gestion des finances de l'association, recherche de partenariats, suivi budgétaire pour assurer la pérennité et le développement d'EPIDEF.</p>
+                    </div>
+                </div>
+                
+                <div class="member-cta">
+                    <h3>Devenir Membre d'EPIDEF</h3>
+                    <p>
+                        Rejoignez une communauté de personnes curieuses et engagées ! Que vous soyez étudiant, professionnel, retraité ou simplement passionné par l'actualité internationale, votre perspective nous intéresse.
+                    </p>
+                    <p style="margin-bottom: 32px;">
+                        <strong>Aucune connaissance préalable n'est requise</strong> - juste l'envie d'apprendre et de partager dans un environnement bienveillant et ouvert.
+                    </p>
+                    <a href="#contact" class="btn-primary">Rejoindre la Communauté</a>
+                </div>
+            </div>
+        </section>
+
+        <section id="contact" class="section contact">
+            <div class="container">
+                <div class="section-header">
+                    <div class="section-badge">Contact</div>
+                    <h2>Rejoignez l'aventure EPIDEF</h2>
+                    <p class="section-description">
+                        Que vous souhaitiez rejoindre l'équipe, devenir membre, ou simplement en savoir plus, n'hésitez pas à nous contacter. Nous avons hâte de faire votre connaissance !
+                    </p>
+                </div>
+                
+                <div class="contact-content">
+                    <div class="contact-options">
+                        <div class="contact-option">
+                            <div class="contact-icon">
+                                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M4 4H20C21.1 4 22 4.9 22 6V18C22 19.1 21.1 20 20 20H4C2.9 20 2 19.1 2 18V6C2 4.9 2.9 4 4 4Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    <polyline points="22,6 12,13 2,6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </div>
+                            <h3>Devenir Membre</h3>
+                            <p>Rejoignez notre communauté et participez à nos événements</p>
+                            <a href="mailto:contact@epidef.org?subject=Candidature%20membre%20EPIDEF&body=Bonjour,%0D%0A%0D%0AJe%20souhaite%20devenir%20membre%20d'EPIDEF.%0D%0A%0D%0ACordialement," class="contact-btn">Nous écrire</a>
+                        </div>
+                        
+                        <div class="contact-option">
+                            <div class="contact-icon">
+                                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M16 4H18C19.1 4 20 4.9 20 6V20C20 21.1 19.1 22 18 22H6C4.9 22 4 21.1 4 20V6C4 4.9 4.9 4 6 4H8M16 4V2M16 4V6M8 4V2M8 4V6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    <rect x="8" y="8" width="8" height="8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </div>
+                            <h3>Rejoindre l'Équipe</h3>
+                            <p>Postulez pour un poste à responsabilité dans l'association</p>
+                            <a href="mailto:contact@epidef.org?subject=Candidature%20équipe%20EPIDEF&body=Bonjour,%0D%0A%0D%0AJe%20souhaite%20rejoindre%20l'équipe%20d'EPIDEF%20en%20tant%20que%20:%0D%0A%0D%0ACordialement," class="contact-btn">Candidater</a>
+                        </div>
+                        
+                        <div class="contact-option">
+                            <div class="contact-icon">
+                                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="2"/>
+                                    <path d="M19.4 15A1.65 1.65 0 0 0 21 13.09A1.65 1.65 0 0 0 19.4 9A1.65 1.65 0 0 0 21 6.91A1.65 1.65 0 0 0 19.4 3" stroke="currentColor" stroke-width="2"/>
+                                    <path d="M4.6 9A1.65 1.65 0 0 0 3 10.91A1.65 1.65 0 0 0 4.6 15A1.65 1.65 0 0 0 3 17.09A1.65 1.65 0 0 0 4.6 21" stroke="currentColor" stroke-width="2"/>
+                                </svg>
+                            </div>
+                            <h3>Informations</h3>
+                            <p>Posez vos questions ou demandez plus d'informations</p>
+                            <a href="mailto:contact@epidef.org?subject=Demande%20d'information%20EPIDEF&body=Bonjour,%0D%0A%0D%0AJe%20souhaite%20obtenir%20des%20informations%20sur%20:%0D%0A%0D%0ACordialement," class="contact-btn">Nous contacter</a>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-footer">
+                        <div class="email-highlight">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M4 4H20C21.1 4 22 4.9 22 6V18C22 19.1 21.1 20 20 20H4C2.9 20 2 19.1 2 18V6C2 4.9 2.9 4 4 4Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                <polyline points="22,6 12,13 2,6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                            <div>
+                                <h4>Contact direct</h4>
+                                <a href="mailto:contact@epidef.org">contact@epidef.org</a>
+                            </div>
+                        </div>
+                        <p>Nous vous répondrons dans les plus brefs délais. Toutes les candidatures et demandes sont les bienvenues !</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>EPIDEF</h4>
+                    <p>
+                        Association de sensibilisation aux enjeux géopolitiques et de défense, ouverte à tous les niveaux et tous les profils.
+                    </p>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Nos Valeurs</h4>
+                    <p>• Accessibilité pour tous</p>
+                    <p>• Pédagogie bienveillante</p>
+                    <p>• Échange respectueux</p>
+                    <p>• Curiosité intellectuelle</p>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Contact</h4>
+                    <a href="mailto:contact@epidef.org">contact@epidef.org</a>
+                    <p>Paris, France</p>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Rejoindre</h4>
+                    <a href="#contact">Devenir membre</a>
+                    <a href="#equipe">Rejoindre l'équipe</a>
+                    <a href="#activites">Nos activités</a>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2024 EPIDEF - Association de sensibilisation aux enjeux géopolitiques et de défense</p>
+                <p style="margin-top: 8px; font-size: 14px; color: rgba(255,255,255,0.6);">
+                    Ouvert à tous • Aucun prérequis • Gratuit
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scrolling pour les liens de navigation
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Animation au scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Observer les cartes pour les animer au scroll
+        document.querySelectorAll('.activity-card, .position-card').forEach(card => {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(30px)';
+            card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observer.observe(card);
+        });
+
+        // Gestion du header au scroll
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('header');
+            if (window.scrollY > 100) {
+                header.style.background = 'rgba(255, 255, 255, 0.98)';
+                header.style.boxShadow = '0 4px 20px rgba(0, 0, 0, 0.1)';
+            } else {
+                header.style.background = 'rgba(255, 255, 255, 0.95)';
+                header.style.boxShadow = 'none';
+            }
+        });
+
+        // Animation des options de contact au survol
+        document.querySelectorAll('.contact-option').forEach(option => {
+            option.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-8px) scale(1.02)';
+            });
+            
+            option.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0) scale(1)';
+            });
+        });
+    </script>
+</body>
+</html>
